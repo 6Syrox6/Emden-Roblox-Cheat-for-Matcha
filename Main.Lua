@@ -6,7 +6,33 @@ local Players = game:GetService("Players")
 local Workspace = game:GetService("Workspace")
 local localPlayer = Players.LocalPlayer
 
+_G.ESPWanted = true
+_G.ESPCops = true
+
+_G.ColorCop = Color3.new(0,0,1.228)
+_G.ColorWanted = Color3.new(1,0,0)
+
 local circles = {}
+
+UI.AddTab("EMDEN", function(tab)
+        local sec = tab:Section("Settings", "Left")
+
+        sec:Toggle("copesp", "Cop ESP", true, function(state)  
+                _G.ESPCops = state         
+        end)
+        sec:ColorPicker("copcolor", 0,0,1,1, function(color)
+                _G.ColorCop = color
+        end)
+
+
+        sec:Toggle("wantedesp", "Wanted ESP", true, function(state)
+                _G.ESPWanted = state
+        end)
+
+        sec:ColorPicker("Wantedcolor", 1,0,0,1, function(color)
+                _G.ColorWanted = color
+        end)
+end)
 
 local function isWanted(player)
         local wantedlevel = player:GetAttribute("IsWanted")
@@ -57,8 +83,17 @@ spawn(function()
             
             local wanted = isWanted(player)
             local cop = isCop(player)
-            
-            if not wanted and not cop then continue end
+
+            local showPlayer = false    
+
+            if wanted and _G.ESPWanted then
+                showPlayer = true
+            elseif cop and _G.ESPCops then    
+                showPlayer = true
+            end
+
+            if not showPlayer then continue end
+            --if not wanted and not cop then continue end
 
             local worldPos = getHeadPos(player)
             if not worldPos then continue end
@@ -80,9 +115,9 @@ spawn(function()
             local c = Drawing.new("Circle")
             
             if wanted then
-                c.Color = Color3.fromRGB(255, 30, 30) -- Rot
+                c.Color = _G.ColorWanted
             else
-                c.Color = Color3.fromRGB(0, 150, 255) -- Blau
+                c.Color = _G.ColorCop
             end
             
             c.Filled = true
@@ -100,5 +135,5 @@ spawn(function()
 end)
 
 if type(notify) == "function" then
-    notify("Emden Cheat V1.0", "Running", 3)
+    notify("Emden Cheat V1.1", "Running", 3)
 end
