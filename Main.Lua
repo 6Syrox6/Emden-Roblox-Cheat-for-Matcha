@@ -18,7 +18,7 @@ end
 
 local function isCop(player)
         local job = player:GetAttribute("Job")
-        if job == 1 or job == 4 then
+        if job == 1 or job == 8 then
         return true
     end
     return false
