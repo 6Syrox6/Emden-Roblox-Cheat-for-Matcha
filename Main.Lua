@@ -100,5 +100,5 @@ spawn(function()
 end)
 
 if type(notify) == "function" then
-    notify("Emden ESP", "ESP", 3)
+    notify("Emden ESP Running", "ESP", 3)
 end
