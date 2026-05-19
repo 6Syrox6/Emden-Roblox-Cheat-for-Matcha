@@ -100,5 +100,5 @@ spawn(function()
 end)
 
 if type(notify) == "function" then
-    notify("Emden ESP", "Running", 3)
+    notify("Emden Cheat V1.0", "Running", 3)
 end
